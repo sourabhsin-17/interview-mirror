@@ -1,0 +1,6 @@
+{
+  "name": "InterviewMirror",
+  "description": "Evidence-based interview practice coach that evaluates typed answers against a visible, role-specific rubric.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
