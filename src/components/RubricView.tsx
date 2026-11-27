@@ -65,20 +65,25 @@ export function RubricView({ role, onBack, onStartPractice }: RubricViewProps) {
             const isFlipped = Boolean(flippedCards[criterion.key]);
 
             return (
-              <div key={criterion.key} className="flip-perspective">
+              <div key={criterion.key} className="flip-perspective flex">
                 <button
                   type="button"
                   onClick={() => toggleFlip(criterion.key)}
-                  className="group block h-[310px] w-full text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#14163F]"
+                  className="group flex w-full text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#14163F]"
                   aria-label={`Flip ${criterion.label} rubric card`}
                 >
                   <div
-                    className={`flip-inner h-full w-full transition-transform duration-300 group-hover:-translate-y-1.5 ${
+                    className={`flip-inner grid min-h-[310px] h-full w-full transition-transform duration-300 group-hover:-translate-y-1.5 ${
                       isFlipped ? 'is-flipped' : ''
                     }`}
                   >
                     {/* FRONT: Warm Cream Trading Card (#FFFDF7) */}
-                    <div className="flip-face absolute inset-0 flex flex-col justify-between rounded-2xl border-[3px] border-[#14163F] bg-[#FFFDF7] p-5 shadow-[0_10px_22px_-8px_rgba(10,20,60,0.55)]">
+                    <div
+                      aria-hidden={isFlipped}
+                      className={`flip-face col-start-1 row-start-1 flex flex-col justify-between rounded-2xl border-[3px] border-[#14163F] bg-[#FFFDF7] p-5 shadow-[0_10px_22px_-8px_rgba(10,20,60,0.55)] ${
+                        isFlipped ? 'pointer-events-none' : ''
+                      }`}
+                    >
                       <div>
                         <div className="flex items-center justify-between border-b-2 border-[#14163F]/10 pb-2.5">
                           <span className="font-mono-tabular text-xs font-extrabold text-[#14163F]/60">
@@ -108,14 +113,19 @@ export function RubricView({ role, onBack, onStartPractice }: RubricViewProps) {
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between pt-2 text-[11px] font-bold text-[#14163F]/75">
+                      <div className="mt-4 flex items-center justify-between pt-2 text-[11px] font-bold text-[#14163F]/75">
                         <span>Flip for Levels 1 &amp; 3</span>
                         <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
                       </div>
                     </div>
 
                     {/* BACK: Deep Indigo Card (#14163F) */}
-                    <div className="flip-face flip-back absolute inset-0 flex flex-col justify-between rounded-2xl border-[3px] border-[#14163F] bg-[#14163F] p-5 text-white shadow-[0_10px_22px_-8px_rgba(10,20,60,0.7)]">
+                    <div
+                      aria-hidden={!isFlipped}
+                      className={`flip-face flip-back col-start-1 row-start-1 flex flex-col justify-between rounded-2xl border-[3px] border-[#14163F] bg-[#14163F] p-5 text-white shadow-[0_10px_22px_-8px_rgba(10,20,60,0.7)] ${
+                        !isFlipped ? 'pointer-events-none' : ''
+                      }`}
+                    >
                       <div>
                         <div className="flex items-center justify-between border-b border-white/15 pb-2.5">
                           <span
@@ -148,7 +158,7 @@ export function RubricView({ role, onBack, onStartPractice }: RubricViewProps) {
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between pt-2 text-[11px] font-semibold text-[#9CD2F3]">
+                      <div className="mt-4 flex items-center justify-between pt-2 text-[11px] font-semibold text-[#9CD2F3]">
                         <span>Flip back to Target 5</span>
                         <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
                       </div>

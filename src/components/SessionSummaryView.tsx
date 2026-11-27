@@ -65,6 +65,7 @@ export function SessionSummaryView({
 
   const sortedByWeakest = [...criterionAverages].sort((a, b) => a.score - b.score);
   const weakest = sortedByWeakest[0];
+  const tiedWeakest = sortedByWeakest.filter((c) => c.score === weakest.score);
   const weakestRubric = role.rubric.find((r) => r.key === weakest.criterion);
 
   const overallAverage =
@@ -203,6 +204,16 @@ export function SessionSummaryView({
                   </span>
                   )
                 </h2>
+                {tiedWeakest.length > 1 && (
+                  <p className="mt-1 text-xs text-slate-300">
+                    Tied for lowest average with{' '}
+                    {tiedWeakest
+                      .slice(1)
+                      .map((c) => c.criterion)
+                      .join(', ')}
+                    .
+                  </p>
+                )}
 
                 {weakestRubric && (
                   <div className="mt-4 rounded-xl border border-white/10 bg-[#0B0A16] p-4">

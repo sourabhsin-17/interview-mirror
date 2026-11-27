@@ -1,5 +1,6 @@
 import 'dotenv/config';
-import express, { Request, Response } from 'express';
+import express from 'express';
+import type { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -99,6 +100,10 @@ function mapApiError(err: unknown): { status: number; message: string } {
 const app = express();
 app.use(express.json({ limit: '1mb' }));
 
+app.get('/api/health', (_req: Request, res: Response) => {
+  res.json({ status: 'ok' });
+});
+
 app.post('/api/evaluate', async (req: Request, res: Response) => {
   try {
     const body = req.body as Partial<EvaluateBody>;
@@ -115,6 +120,11 @@ app.post('/api/evaluate', async (req: Request, res: Response) => {
 
     if (!answer) {
       res.status(400).json({ error: 'Please write an answer before submitting for evaluation.' });
+      return;
+    }
+
+    if (answer.length > 8000) {
+      res.status(400).json({ error: 'Answer is too long (maximum 8,000 characters). Please tighten your response.' });
       return;
     }
 

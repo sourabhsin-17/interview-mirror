@@ -60,6 +60,11 @@ export function FeedbackView({
   }, [evaluation.evidence, criterionFilter]);
 
   useEffect(() => {
+    setCriterionFilter('ALL');
+    setShowImprovedExample(false);
+  }, [question.id, evaluation]);
+
+  useEffect(() => {
     setSelectedEvidenceId(visibleEvidence[0]?.id ?? null);
   }, [visibleEvidence]);
 

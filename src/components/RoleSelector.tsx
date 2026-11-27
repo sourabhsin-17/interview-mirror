@@ -241,12 +241,17 @@ export function RoleSelector({ onSelectRole }: RoleSelectorProps) {
               aria-label="Flip preview card between initial draft and revised answer"
             >
               <div
-                className={`flip-inner min-h-[270px] w-full ${
+                className={`flip-inner grid w-full ${
                   isPreviewFlipped ? 'is-flipped' : ''
                 }`}
               >
                 {/* FRONT: Warm Cream Card with #14163F 3px border */}
-                <div className="flip-face absolute inset-0 flex flex-col justify-between rounded-2xl border-[3px] border-[#14163F] bg-[#FFFDF7] p-5 text-[#14163F] shadow-[0_14px_30px_-8px_rgba(0,0,0,0.6)]">
+                <div
+                  aria-hidden={isPreviewFlipped}
+                  className={`flip-face col-start-1 row-start-1 flex min-h-[270px] flex-col justify-between rounded-2xl border-[3px] border-[#14163F] bg-[#FFFDF7] p-5 text-[#14163F] shadow-[0_14px_30px_-8px_rgba(0,0,0,0.6)] ${
+                    isPreviewFlipped ? 'pointer-events-none' : ''
+                  }`}
+                >
                   <div>
                     <div className="flex items-center justify-between border-b-2 border-[#14163F]/10 pb-2.5">
                       <span className="font-mono-tabular text-[11px] font-bold uppercase tracking-wider text-[#14163F]/70">
@@ -272,14 +277,19 @@ export function RoleSelector({ onSelectRole }: RoleSelectorProps) {
                     </p>
                   </div>
 
-                  <div className="flex items-center justify-between border-t border-[#14163F]/10 pt-3 text-xs font-bold text-[#14163F]">
+                  <div className="mt-4 flex items-center justify-between border-t border-[#14163F]/10 pt-3 text-xs font-bold text-[#14163F]">
                     <span>Click card to flip to revision</span>
                     <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
                   </div>
                 </div>
 
                 {/* BACK: Deep Indigo Card (#14163F) */}
-                <div className="flip-face flip-back absolute inset-0 flex flex-col justify-between rounded-2xl border-[3px] border-[#67E8F9] bg-[#14163F] p-5 text-[#E6EDF7] shadow-[0_14px_32px_-8px_rgba(103,232,249,0.28)]">
+                <div
+                  aria-hidden={!isPreviewFlipped}
+                  className={`flip-face flip-back col-start-1 row-start-1 flex min-h-[270px] flex-col justify-between rounded-2xl border-[3px] border-[#67E8F9] bg-[#14163F] p-5 text-[#E6EDF7] shadow-[0_14px_32px_-8px_rgba(103,232,249,0.28)] ${
+                    !isPreviewFlipped ? 'pointer-events-none' : ''
+                  }`}
+                >
                   <div>
                     <div className="flex items-center justify-between border-b border-white/15 pb-2.5">
                       <span
@@ -298,7 +308,7 @@ export function RoleSelector({ onSelectRole }: RoleSelectorProps) {
                     </p>
                   </div>
 
-                  <div className="flex items-center justify-between border-t border-white/15 pt-3 text-xs font-semibold text-[#67E8F9]">
+                  <div className="mt-4 flex items-center justify-between border-t border-white/15 pt-3 text-xs font-semibold text-[#67E8F9]">
                     <span>Click to flip back to draft</span>
                     <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
                   </div>

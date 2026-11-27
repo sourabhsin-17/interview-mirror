@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   CRITERION_ORDER,
   CriterionKey,
@@ -52,6 +52,11 @@ export function PracticeView({
   const [focusedCriterion, setFocusedCriterion] = useState<CriterionKey>('Relevance');
   const [validationError, setValidationError] = useState<string | null>(null);
   const [clearedBackup, setClearedBackup] = useState<string | null>(null);
+
+  useEffect(() => {
+    setClearedBackup(null);
+    setValidationError(null);
+  }, [question.id, isRevising]);
 
   const trimmed = draftAnswer.trim();
   const wordCount = trimmed ? trimmed.split(/\s+/).length : 0;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   EvaluationResult,
   QuestionItem,
@@ -48,6 +48,11 @@ export function CompareView({
   const [selectedAfterId, setSelectedAfterId] = useState<string | null>(
     afterEval.evidence[0]?.id ?? null
   );
+
+  useEffect(() => {
+    setSelectedBeforeId(beforeEval.evidence[0]?.id ?? null);
+    setSelectedAfterId(afterEval.evidence[0]?.id ?? null);
+  }, [question.id, beforeEval, afterEval]);
 
   const isLastQuestion = questionIndex === role.questions.length - 1;
 
